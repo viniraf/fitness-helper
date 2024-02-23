@@ -125,4 +125,41 @@ app.MapGet("/macrodistribution/loseweight", (int basalMetabolicRate, double weig
 .WithTags("Macronutrient Distribution")
 .WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution for lose weight"));
 
+app.MapGet("/macrodistribution/gainweight", (int basalMetabolicRate, double weight) =>
+{
+    double gainWeightBasalMetabolicRate = basalMetabolicRate + 500;
+
+    double totalCalories = gainWeightBasalMetabolicRate;
+
+    // Calculate grams of protein
+    double gramsOfProtein = weight * 1.8;
+
+    // Subtract protein calories from total
+    totalCalories = totalCalories - (gramsOfProtein * 4);
+
+    // Calculate grams of fat
+    double gramsOfFat = weight;
+
+    // Subtract fat calories from total
+    totalCalories = totalCalories - (gramsOfFat * 8);
+
+    // Calculate grams of carb
+    double gramsOfCarb = totalCalories / 4;
+
+    return Results.Ok(
+        new
+        {
+            BMR = $"{basalMetabolicRate} calories",
+            GainWeightBMR = $"{gainWeightBasalMetabolicRate} calories",
+            ProtGram = $"{gramsOfProtein} g",
+            ProtCal = $"{gramsOfProtein * 4} calories from protein",
+            CarbGram = $"{gramsOfCarb} g",
+            CarbCal = $"{gramsOfCarb * 4} calories from carb",
+            FatGram = $"{gramsOfFat} g",
+            FatCal = $"{gramsOfFat * 8} calories from fat",
+        });
+})
+.WithTags("Macronutrient Distribution")
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution for gain weight"));
+
 app.Run();
