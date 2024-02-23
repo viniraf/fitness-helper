@@ -1,3 +1,8 @@
+using FitnessHelper.Enums;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Runtime.ConstrainedExecution;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,5 +24,30 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/bmr/withoutexercise", ([FromQuery] Sex sex, double weight, double height, int age) =>
+{
+
+    double basalMetabolicRate = 0;
+
+    if (sex == Sex.Male)
+    {
+        basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    }
+    else if (sex == Sex.Female)
+    {
+        basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 161;
+    }
+
+    //Fixed value for zero times per exercise week
+    basalMetabolicRate = basalMetabolicRate * 1.2;
+
+    int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
+
+    return Results.Ok(new { BasalMetabolicRateWithoutExercise = $"{roundedBaseMetabolicRate} calories" });
+
+})
+.WithTags("Basal Metabolic Rate")
+.WithMetadata(new SwaggerOperationAttribute("Returns Basal Metabolic Rate without considering exercise"));
 
 app.Run();
