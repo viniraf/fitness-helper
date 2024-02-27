@@ -1,8 +1,8 @@
-﻿namespace FitnessHelper.Endpoints.Macrodistribution.GainWeight;
+﻿namespace FitnessHelper.Endpoints.MacroCalculation.MaintainWeight;
 
-public class GainWeight
+public class MaintainWeight
 {
-    public static string Template => "/macrodistribution/gainweight";
+    public static string Template => "/macrocalculation/maintainweight";
 
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
@@ -10,9 +10,9 @@ public class GainWeight
 
     public static IResult Action(int basalMetabolicRate, double weight)
     {
-        double gainWeightBasalMetabolicRate = basalMetabolicRate + 500;
+        double maintainWeightBasalMetabolicRate = basalMetabolicRate;
 
-        double totalCalories = gainWeightBasalMetabolicRate;
+        double totalCalories = maintainWeightBasalMetabolicRate;
 
         // Calculate grams of protein
         double gramsOfProtein = weight * 1.8;
@@ -33,7 +33,7 @@ public class GainWeight
             new
             {
                 BMR = $"{basalMetabolicRate} calories",
-                GainWeightBMR = $"{gainWeightBasalMetabolicRate} calories",
+                MaintainWeightBMR = $"{maintainWeightBasalMetabolicRate} calories",
                 ProtGram = $"{gramsOfProtein} g",
                 ProtCal = $"{gramsOfProtein * 4} calories from protein",
                 CarbGram = $"{gramsOfCarb} g",
