@@ -1,8 +1,10 @@
 using FitnessHelper.Endpoints.Bmr.WithExercise;
 using FitnessHelper.Endpoints.Bmr.WithoutExercise;
-using FitnessHelper.Endpoints.Macrodistribution.GainWeight;
-using FitnessHelper.Endpoints.Macrodistribution.LoseWeight;
-using FitnessHelper.Endpoints.Macrodistribution.MaintainWeight;
+using FitnessHelper.Endpoints.MacroCalculation.GainWeight;
+using FitnessHelper.Endpoints.MacroCalculation.LoseWeight;
+using FitnessHelper.Endpoints.MacroCalculation.MaintainWeight;
+using FitnessHelper.Endpoints.MacroDistribution.FourMeals;
+using FitnessHelper.Endpoints.MacroDistribution.SixMeals;
 using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -30,7 +32,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.MapMethods(WithoutExercise.Template, WithoutExercise.Methods, WithoutExercise.Handle)
 .WithTags("Basal Metabolic Rate")
 .WithMetadata(new SwaggerOperationAttribute("Returns Basal Metabolic Rate without considering exercise"));
@@ -40,15 +41,23 @@ app.MapMethods(WithExercise.Template, WithExercise.Methods, WithExercise.Handle)
 .WithMetadata(new SwaggerOperationAttribute("Returns Basal Metabolic Rate considering exercise"));
 
 app.MapMethods(LoseWeight.Template, LoseWeight.Methods, LoseWeight.Handle)
-.WithTags("Macronutrient Distribution")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution for lose weight"));
+.WithTags("Macronutrient Calculation")
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for lose weight"));
 
 app.MapMethods(GainWeight.Template, GainWeight.Methods, LoseWeight.Handle)
-.WithTags("Macronutrient Distribution")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution for gain weight"));
+.WithTags("Macronutrient Calculation")
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for gain weight"));
 
 app.MapMethods(MaintainWeight.Template, MaintainWeight.Methods, MaintainWeight.Handle)
+.WithTags("Macronutrient Calculation")
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for maintain weight"));
+
+app.MapMethods(FourMeals.Template, FourMeals.Methods, FourMeals.Handle)
 .WithTags("Macronutrient Distribution")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution for maintain weight"));
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution in the day considering four meals"));
+
+app.MapMethods(SixMeals.Template, SixMeals.Methods, SixMeals.Handle)
+.WithTags("Macronutrient Distribution")
+.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution in the day considering six meals"));
 
 app.Run();
