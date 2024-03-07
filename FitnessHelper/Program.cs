@@ -3,8 +3,6 @@ using FitnessHelper.Endpoints.Bmr.WithoutExercise;
 using FitnessHelper.Endpoints.MacroCalculation.GainWeight;
 using FitnessHelper.Endpoints.MacroCalculation.LoseWeight;
 using FitnessHelper.Endpoints.MacroCalculation.MaintainWeight;
-using FitnessHelper.Endpoints.MacroDistribution.FourMeals;
-using FitnessHelper.Endpoints.MacroDistribution.SixMeals;
 using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -51,13 +49,5 @@ app.MapMethods(GainWeight.Template, GainWeight.Methods, LoseWeight.Handle)
 app.MapMethods(MaintainWeight.Template, MaintainWeight.Methods, MaintainWeight.Handle)
 .WithTags("Macronutrient Calculation")
 .WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for maintain weight"));
-
-app.MapMethods(FourMeals.Template, FourMeals.Methods, FourMeals.Handle)
-.WithTags("Macronutrient Distribution")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution in the day considering four meals"));
-
-app.MapMethods(SixMeals.Template, SixMeals.Methods, SixMeals.Handle)
-.WithTags("Macronutrient Distribution")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient distribution in the day considering six meals"));
 
 app.Run();
