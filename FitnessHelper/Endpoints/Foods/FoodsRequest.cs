@@ -1,9 +1,7 @@
-﻿namespace FitnessHelper.Domain;
+﻿namespace FitnessHelper.Endpoints.Foods;
 
-public class Foods
+public class FoodsRequest
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = string.Empty;
 
     public double QtyProtPerGram { get; set; }
@@ -11,11 +9,4 @@ public class Foods
     public double QtyCarbPerGram { get; set; }
 
     public double QtyFatPerGram { get; set; }
-
-    public double QtyCalPerGram { get; set; }
-
-    public Foods()
-    {
-        
-    }
 }

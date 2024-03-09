@@ -1,5 +1,6 @@
 ﻿using FitnessHelper.Data;
 using FitnessHelper.Domain;
+using FitnessHelper.Endpoints.Foods;
 
 namespace FitnessHelper.Endpoints.NutritionalInformation;
 
@@ -11,27 +12,27 @@ public class PostFoods
 
     public static Delegate Handle => Action;
 
-    public static async Task<IResult> Action(Foods food, AppDbContext context)
+    public static async Task<IResult> Action(FoodsRequest foodsRequest, AppDbContext context)
     {
-        if (food is null)
+        if (foodsRequest is null)
         {
-            return Results.BadRequest("Object null, please check the data and try again");
+            return Results.BadRequest("Please check the data and try again");
         }
 
-        var newFood = new Foods();
+        var newFood = new FoodsClass();
 
-        var qtyCalPerGram = (food.QtyProtPerGram * 4) + (food.QtyCarbPerGram * 4) + (food.QtyFatPerGram * 7);
+        var qtyCalPerGram = (foodsRequest.QtyProtPerGram * 4) + (foodsRequest.QtyCarbPerGram * 4) + (foodsRequest.QtyFatPerGram * 7);
 
-        newFood.Name = food.Name;
-        newFood.QtyProtPerGram = food.QtyProtPerGram;
-        newFood.QtyCarbPerGram = food.QtyCarbPerGram;
-        newFood.QtyFatPerGram = food.QtyFatPerGram;
+        newFood.Name = foodsRequest.Name;
+        newFood.QtyProtPerGram = foodsRequest.QtyProtPerGram;
+        newFood.QtyCarbPerGram = foodsRequest.QtyCarbPerGram;
+        newFood.QtyFatPerGram = foodsRequest.QtyFatPerGram;
         newFood.QtyCalPerGram = qtyCalPerGram;
 
         await context.Foods.AddAsync(newFood);
         await context.SaveChangesAsync();
 
-        return Results.Created("/notimplemented", $"{newFood.Name} created!");
+        return Results.Created("/notimplemented", $"{newFood.Name} created successfully");
 
     }
 }

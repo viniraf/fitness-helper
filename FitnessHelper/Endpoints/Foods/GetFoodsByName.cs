@@ -1,23 +1,27 @@
 ﻿using FitnessHelper.Data;
-using FitnessHelper.Endpoints.Foods;
 
-namespace FitnessHelper.Endpoints.NutritionalInformation;
+namespace FitnessHelper.Endpoints.Foods;
 
-public class GetAllFoods
+public class GetFoodsByName
 {
-    public static string Template => "/foods";
+    public static string Template => "/foods/{name}";
 
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(AppDbContext context)
+    public static IResult Action(AppDbContext context, string name)
     {
-        var foods = context.Foods.ToList();
 
-        if (foods is null)
+        string lowerName = name.ToLower();
+
+        var foods = context.Foods
+            .Where(f => f.Name.ToLower().Contains(name))
+            .ToList();
+
+        if (foods is null || !foods.Any())
         {
-            return Results.NotFound("No food registered");
+            return Results.NotFound($"No food found with the name: {name}");
         }
 
         var foodsResponse = foods.Select(f =>

@@ -1,6 +1,7 @@
 using FitnessHelper.Data;
 using FitnessHelper.Endpoints.Bmr.WithExercise;
 using FitnessHelper.Endpoints.Bmr.WithoutExercise;
+using FitnessHelper.Endpoints.Foods;
 using FitnessHelper.Endpoints.MacroCalculation.GainWeight;
 using FitnessHelper.Endpoints.MacroCalculation.LoseWeight;
 using FitnessHelper.Endpoints.MacroCalculation.MaintainWeight;
@@ -64,5 +65,9 @@ app.MapMethods(GetAllFoods.Template, GetAllFoods.Methods, GetAllFoods.Handle)
 app.MapMethods(PostFoods.Template, PostFoods.Methods, PostFoods.Handle)
 .WithTags("3. Foods and Nutritional Information")
 .WithMetadata(new SwaggerOperationAttribute("Insert a new food and the nutritional information"));
+
+app.MapMethods(GetFoodsByName.Template, GetFoodsByName.Methods, GetFoodsByName.Handle)
+.WithTags("3. Foods and Nutritional Information")
+.WithMetadata(new SwaggerOperationAttribute("Returns all foods containing the provided name in their names"));
 
 app.Run();
