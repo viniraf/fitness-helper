@@ -28,10 +28,12 @@ public class GetFoodsByName
         new FoodsResponse
         {
             Name = f.Name,
-            QtyProtPerGram = f.QtyProtPerGram,
-            QtyCarbPerGram = f.QtyCarbPerGram,
-            QtyFatPerGram = f.QtyFatPerGram,
-            QtyCalPerGram = f.QtyCalPerGram,
+            UnitOfMeasurement = f.UnitOfMeasurement,
+            Qty = f.Qty,
+            QtyProt = f.QtyProt,
+            QtyCarb = f.QtyCarb,
+            QtyFat = f.QtyFat,
+            QtyCal = f.QtyCal,
         });
 
         return Results.Ok(foodsResponse);

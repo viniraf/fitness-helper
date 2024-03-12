@@ -4,9 +4,13 @@ public class FoodsRequest
 {
     public string Name { get; set; } = string.Empty;
 
-    public double QtyProtPerGram { get; set; }
+    public string UnitOfMeasurement { get; set; } = string.Empty;
 
-    public double QtyCarbPerGram { get; set; }
+    public double Qty { get; set; }
 
-    public double QtyFatPerGram { get; set; }
+    public double QtyProt { get; set; }
+
+    public double QtyCarb { get; set; }
+
+    public double QtyFat { get; set; }
 }

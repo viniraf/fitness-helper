@@ -21,13 +21,15 @@ public class PostFoods
 
         var newFood = new FoodsClass();
 
-        var qtyCalPerGram = (foodsRequest.QtyProtPerGram * 4) + (foodsRequest.QtyCarbPerGram * 4) + (foodsRequest.QtyFatPerGram * 7);
+        var qtyCalPerGram = (foodsRequest.QtyProt * 4) + (foodsRequest.QtyCarb * 4) + (foodsRequest.QtyFat * 7);
 
         newFood.Name = foodsRequest.Name;
-        newFood.QtyProtPerGram = foodsRequest.QtyProtPerGram;
-        newFood.QtyCarbPerGram = foodsRequest.QtyCarbPerGram;
-        newFood.QtyFatPerGram = foodsRequest.QtyFatPerGram;
-        newFood.QtyCalPerGram = qtyCalPerGram;
+        newFood.UnitOfMeasurement = foodsRequest.UnitOfMeasurement;
+        newFood.Qty = foodsRequest.Qty;
+        newFood.QtyProt = foodsRequest.QtyProt;
+        newFood.QtyCarb = foodsRequest.QtyCarb;
+        newFood.QtyFat = foodsRequest.QtyFat;
+        newFood.QtyCal = qtyCalPerGram;
 
         await context.Foods.AddAsync(newFood);
         await context.SaveChangesAsync();
