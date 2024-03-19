@@ -27,6 +27,7 @@ public class WithoutExercise
             basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 161;
         }
 
+        // TODO: Improve readability and transform into function
         //Fixed value for zero times per exercise week
         basalMetabolicRate = basalMetabolicRate * 1.2;
 
