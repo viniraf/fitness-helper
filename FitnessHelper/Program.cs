@@ -70,4 +70,8 @@ app.MapMethods(GetFoodsByName.Template, GetFoodsByName.Methods, GetFoodsByName.H
 .WithTags("3. Foods and Nutritional Information")
 .WithMetadata(new SwaggerOperationAttribute("Returns all foods containing the provided name in their names"));
 
+app.MapMethods(GetFoodById.Template, GetFoodById.Methods, GetFoodById.Handle)
+.WithTags("3. Foods and Nutritional Information")
+.WithMetadata(new SwaggerOperationAttribute("Returns the complete details of the food item corresponding to the provided Id"));
+
 app.Run();

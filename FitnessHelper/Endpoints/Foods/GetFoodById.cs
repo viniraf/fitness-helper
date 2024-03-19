@@ -1,23 +1,23 @@
 ﻿using FitnessHelper.Data;
-using FitnessHelper.Endpoints.Foods;
 
-namespace FitnessHelper.Endpoints.NutritionalInformation;
+namespace FitnessHelper.Endpoints.Foods;
 
-public class GetAllFoods
+public class GetFoodById
 {
-    public static string Template => "/foods";
+    public static string Template => "/foods/{id:int}";
 
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(AppDbContext context)
+    public static IResult Action(AppDbContext context, int id)
     {
-        var foods = context.Foods.ToList();
+
+        var foods = context.Foods.Where(f =>  f.Id == id);
 
         if (foods is null || !foods.Any())
         {
-            return Results.NotFound("No food registered");
+            return Results.NotFound($"No food found with the id: {id}");
         }
 
         var foodsResponse = foods.Select(f =>

@@ -27,6 +27,7 @@ public class GetFoodsByName
         var foodsResponse = foods.Select(f =>
         new FoodsResponse
         {
+            Id = f.Id,
             Name = f.Name,
             UnitOfMeasurement = f.UnitOfMeasurement,
             Qty = f.Qty,
