@@ -1,4 +1,5 @@
 ﻿using FitnessHelper.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessHelper.Endpoints.Foods;
 
@@ -21,7 +22,15 @@ public class GetFoodsByName
 
         if (foods is null || !foods.Any())
         {
-            return Results.NotFound($"No food found with the name: {name}");
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Title = "Not Found",
+                Detail = $"No food found with the name: {name}"
+            };
+
+            return Results.Problem(problemDetails);
         }
 
         var foodsResponse = foods.Select(f =>

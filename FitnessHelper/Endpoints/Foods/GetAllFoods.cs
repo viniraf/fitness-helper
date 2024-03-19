@@ -1,5 +1,7 @@
 ﻿using FitnessHelper.Data;
 using FitnessHelper.Endpoints.Foods;
+using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace FitnessHelper.Endpoints.NutritionalInformation;
 
@@ -17,7 +19,14 @@ public class GetAllFoods
 
         if (foods is null || !foods.Any())
         {
-            return Results.NotFound("No food registered");
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Title = "Not Found",
+                Detail = $"No food registered"
+            };
+
+            return Results.Problem(problemDetails);
         }
 
         var foodsResponse = foods.Select(f =>
