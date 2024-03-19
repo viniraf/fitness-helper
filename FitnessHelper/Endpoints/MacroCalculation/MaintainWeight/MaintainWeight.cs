@@ -14,21 +14,17 @@ public class MaintainWeight
 
         double totalCalories = maintainWeightBasalMetabolicRate;
 
-        // Calculate grams of protein
         double gramsOfProtein = weight * 1.8;
 
-        // Subtract protein calories from total
         totalCalories = totalCalories - (gramsOfProtein * 4);
 
-        // Calculate grams of fat
         double gramsOfFat = weight;
 
-        // Subtract fat calories from total
         totalCalories = totalCalories - (gramsOfFat * 8);
 
-        // Calculate grams of carb
         double gramsOfCarb = totalCalories / 4;
 
+        // TODO: Create response object
         return Results.Ok(
             new
             {

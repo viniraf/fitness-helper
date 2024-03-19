@@ -4,37 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessHelper.Endpoints.Foods;
 
-public class GetFoodsByName
+public class GetFoodById
 {
-    public static string Template => "/foods/{name}";
+    public static string Template => "/foods/{id:int}";
 
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(AppDbContext context, string name)
+    public static IResult Action(AppDbContext context, int id)
     {
 
-        string lowerName = name.ToLower();
-
-        List<FoodsClass>? foods = context.Foods
-            .Where(f => f.Name.ToLower().Contains(name))
-            .ToList();
+        IQueryable<FoodsClass>? foods = context.Foods.Where(f =>  f.Id == id);
 
         if (foods is null || !foods.Any())
         {
-
             ProblemDetails problemDetails = new ProblemDetails
             {
                 Status = StatusCodes.Status404NotFound,
                 Title = "Not Found",
-                Detail = $"No food found with the name: {name}"
+                Detail = $"No food found with the id: {id}"
             };
 
             return Results.Problem(problemDetails);
         }
 
-        IEnumerable<FoodsResponse> foodsResponse = foods.Select(f =>
+        IQueryable<FoodsResponse> foodsResponse = foods.Select(f =>
         new FoodsResponse
         {
             Id = f.Id,

@@ -1,5 +1,8 @@
 ﻿using FitnessHelper.Data;
+using FitnessHelper.Domain;
 using FitnessHelper.Endpoints.Foods;
+using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace FitnessHelper.Endpoints.NutritionalInformation;
 
@@ -13,21 +16,31 @@ public class GetAllFoods
 
     public static IResult Action(AppDbContext context)
     {
-        var foods = context.Foods.ToList();
+        List<FoodsClass>? foods = context.Foods.ToList();
 
-        if (foods is null)
+        if (foods is null || !foods.Any())
         {
-            return Results.NotFound("No food registered");
+            ProblemDetails problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status404NotFound,
+                Title = "Not Found",
+                Detail = $"No food registered"
+            };
+
+            return Results.Problem(problemDetails);
         }
 
-        var foodsResponse = foods.Select(f =>
+        IEnumerable<FoodsResponse> foodsResponse = foods.Select(f =>
         new FoodsResponse
         {
+            Id = f.Id,
             Name = f.Name,
-            QtyProtPerGram = f.QtyProtPerGram,
-            QtyCarbPerGram = f.QtyCarbPerGram,
-            QtyFatPerGram = f.QtyFatPerGram,
-            QtyCalPerGram = f.QtyCalPerGram,
+            UnitOfMeasurement = f.UnitOfMeasurement,
+            Qty = f.Qty,
+            QtyProt = f.QtyProt,
+            QtyCarb = f.QtyCarb,
+            QtyFat = f.QtyFat,
+            QtyCal = f.QtyCal,
         });
 
         return Results.Ok(foodsResponse);

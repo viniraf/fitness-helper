@@ -42,6 +42,7 @@ public class WithExercise
 
         int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
 
+
         return Results.Ok(new { BasalMetabolicRateWithExercise = $"{roundedBaseMetabolicRate} calories" });
     }
 }
