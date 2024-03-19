@@ -1,4 +1,5 @@
 ﻿using FitnessHelper.Data;
+using FitnessHelper.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessHelper.Endpoints.Foods;
@@ -14,11 +15,11 @@ public class GetFoodById
     public static IResult Action(AppDbContext context, int id)
     {
 
-        var foods = context.Foods.Where(f =>  f.Id == id);
+        IQueryable<FoodsClass>? foods = context.Foods.Where(f =>  f.Id == id);
 
         if (foods is null || !foods.Any())
         {
-            var problemDetails = new ProblemDetails
+            ProblemDetails problemDetails = new ProblemDetails
             {
                 Status = StatusCodes.Status404NotFound,
                 Title = "Not Found",
@@ -28,7 +29,7 @@ public class GetFoodById
             return Results.Problem(problemDetails);
         }
 
-        var foodsResponse = foods.Select(f =>
+        IQueryable<FoodsResponse> foodsResponse = foods.Select(f =>
         new FoodsResponse
         {
             Id = f.Id,
