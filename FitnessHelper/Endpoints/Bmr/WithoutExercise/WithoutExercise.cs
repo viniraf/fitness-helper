@@ -1,4 +1,5 @@
-﻿using FitnessHelper.Enums;
+﻿using FitnessHelper.Common;
+using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,13 +19,15 @@ public class WithoutExercise
     {
         double basalMetabolicRate = 0;
 
+        Calculations calculations = new Calculations();
+
         if (sex == Sex.Male)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            basalMetabolicRate = calculations.MaleBasalMetabolicRate(weight, height, age);
         }
         else if (sex == Sex.Female)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 161;
+            basalMetabolicRate = calculations.FemaleBasalMetabolicRate(weight, height, age);
         }
 
         // TODO: Improve readability and transform into function
