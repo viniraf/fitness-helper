@@ -23,11 +23,12 @@ public class WithoutExercise
 
         if (sex == Sex.Male)
         {
-            basalMetabolicRate = calculations.MaleBasalMetabolicRate(weight, height, age);
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
-        else if (sex == Sex.Female)
+        
+        if (sex == Sex.Female)
         {
-            basalMetabolicRate = calculations.FemaleBasalMetabolicRate(weight, height, age);
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
 
         // TODO: Improve readability and transform into function

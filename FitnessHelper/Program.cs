@@ -50,7 +50,7 @@ app.MapMethods(LoseWeight.Template, LoseWeight.Methods, LoseWeight.Handle)
 .WithTags("2. Macronutrient Calculation")
 .WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for lose weight"));
 
-app.MapMethods(GainWeight.Template, GainWeight.Methods, LoseWeight.Handle)
+app.MapMethods(GainWeight.Template, GainWeight.Methods, GainWeight.Handle)
 .WithTags("2. Macronutrient Calculation")
 .WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for gain weight"));
 

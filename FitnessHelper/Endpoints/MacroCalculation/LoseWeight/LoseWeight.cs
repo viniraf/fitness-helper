@@ -1,4 +1,6 @@
-﻿using FitnessHelper.Enums;
+﻿using FitnessHelper.Common;
+using FitnessHelper.Domain;
+using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessHelper.Endpoints.MacroCalculation.LoseWeight;
@@ -13,33 +15,13 @@ public class LoseWeight
 
     public static IResult Action(int basalMetabolicRate, double weight)
     {
-        double loseWeightBasalMetabolicRate = basalMetabolicRate - 500;
+        Calculations calculations = new Calculations();
 
-        double totalCalories = loseWeightBasalMetabolicRate;
+        Goal goal = Goal.LoseWeight;
 
-        double gramsOfProtein = weight * 1.8;
+        MacroCalculationClass macroCalculation = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
 
-        totalCalories = totalCalories - (gramsOfProtein * 4);
-
-        double gramsOfFat = weight;
-
-        totalCalories = totalCalories - (gramsOfFat * 8);
-
-        double gramsOfCarb = totalCalories / 4;
-
-        // TODO: Create response object
-        return Results.Ok(
-            new
-            {
-                BMR = $"{basalMetabolicRate} calories",
-                LoseWeightBMR = $"{loseWeightBasalMetabolicRate} calories",
-                ProtGram = $"{gramsOfProtein} g",
-                ProtCal = $"{gramsOfProtein * 4} calories from protein",
-                CarbGram = $"{gramsOfCarb} g",
-                CarbCal = $"{gramsOfCarb * 4} calories from carb",
-                FatGram = $"{gramsOfFat} g",
-                FatCal = $"{gramsOfFat * 8} calories from fat",
-            });
+        return Results.Ok(macroCalculation);
     }
 
 }
