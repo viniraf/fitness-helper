@@ -40,23 +40,23 @@ app.UseHttpsRedirection();
 
 app.MapMethods(WithoutExercise.Template, WithoutExercise.Methods, WithoutExercise.Handle)
 .WithTags("1. Basal Metabolic Rate")
-.WithMetadata(new SwaggerOperationAttribute("Returns Basal Metabolic Rate without considering exercise"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the amount of calories burned by the body during the day without considering physical exercise"));
 
 app.MapMethods(WithExercise.Template, WithExercise.Methods, WithExercise.Handle)
 .WithTags("1. Basal Metabolic Rate")
-.WithMetadata(new SwaggerOperationAttribute("Returns Basal Metabolic Rate considering exercise"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the amount of calories burned by the body during the day considering physical exercise"));
 
 app.MapMethods(LoseWeight.Template, LoseWeight.Methods, LoseWeight.Handle)
 .WithTags("2. Macronutrient Calculation")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for lose weight"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the necessary amount of each macronutrient per day to lose weight"));
 
 app.MapMethods(GainWeight.Template, GainWeight.Methods, GainWeight.Handle)
 .WithTags("2. Macronutrient Calculation")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for gain weight"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the necessary amount of each macronutrient per day to gain weight"));
 
 app.MapMethods(MaintainWeight.Template, MaintainWeight.Methods, MaintainWeight.Handle)
 .WithTags("2. Macronutrient Calculation")
-.WithMetadata(new SwaggerOperationAttribute("Returns macronutrient calculation for maintain weight"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the necessary amount of each macronutrient per day to maintain weight"));
 
 app.MapMethods(GetAllFoods.Template, GetAllFoods.Methods, GetAllFoods.Handle)
 .WithTags("3. Foods and Nutritional Information")
@@ -68,10 +68,10 @@ app.MapMethods(PostFoods.Template, PostFoods.Methods, PostFoods.Handle)
 
 app.MapMethods(GetFoodsByName.Template, GetFoodsByName.Methods, GetFoodsByName.Handle)
 .WithTags("3. Foods and Nutritional Information")
-.WithMetadata(new SwaggerOperationAttribute("Returns all foods containing the provided name in their names"));
+.WithMetadata(new SwaggerOperationAttribute("Returns all foods registered with the nutritional information of each containing the provided text in their names"));
 
 app.MapMethods(GetFoodById.Template, GetFoodById.Methods, GetFoodById.Handle)
 .WithTags("3. Foods and Nutritional Information")
-.WithMetadata(new SwaggerOperationAttribute("Returns the complete details of the food item corresponding to the provided Id"));
+.WithMetadata(new SwaggerOperationAttribute("Returns the nutricional information of the food corresponding to the provided Id"));
 
 app.Run();

@@ -44,9 +44,13 @@ public class WithExercise
 
         basalMetabolicRate = basalMetabolicRate * multiplicativeFactor;
 
-        int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
+        int roundedBasalMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
 
 
-        return Results.Ok(new { BasalMetabolicRateWithExercise = $"{roundedBaseMetabolicRate} calories" });
+        return Results.Ok(new 
+        { 
+            bmr = roundedBasalMetabolicRate,
+            type = "With exercise"
+        });
     }
 }

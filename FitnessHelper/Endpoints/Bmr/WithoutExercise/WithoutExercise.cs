@@ -35,9 +35,13 @@ public class WithoutExercise
         //Fixed value for zero times per exercise week
         basalMetabolicRate = basalMetabolicRate * 1.2;
 
-        int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
+        int roundedBasalMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
 
-        return Results.Ok(new { BasalMetabolicRateWithoutExercise = $"{roundedBaseMetabolicRate} calories" });
+        return Results.Ok(new
+        {
+            bmr = roundedBasalMetabolicRate,
+            type = "Without exercise"
+        });
     }
 
 }

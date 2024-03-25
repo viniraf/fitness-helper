@@ -18,8 +18,8 @@ public class GainWeight
 
         Goal goal = Goal.GainWeight;
 
-        MacroCalculationClass macroCalculation = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
+        MacroCalculationClass macroCalculationResult = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
 
-        return Results.Ok(macroCalculation);
+        return Results.Ok(macroCalculationResult);
     }
 }

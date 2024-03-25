@@ -19,9 +19,9 @@ public class LoseWeight
 
         Goal goal = Goal.LoseWeight;
 
-        MacroCalculationClass macroCalculation = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
+        MacroCalculationClass macroCalculationResult = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
 
-        return Results.Ok(macroCalculation);
+        return Results.Ok(macroCalculationResult);
     }
 
 }
