@@ -1,4 +1,5 @@
-﻿using FitnessHelper.Enums;
+﻿using FitnessHelper.Common;
+using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,22 +19,29 @@ public class WithoutExercise
     {
         double basalMetabolicRate = 0;
 
+        Calculations calculations = new Calculations();
+
         if (sex == Sex.Male)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
-        else if (sex == Sex.Female)
+        
+        if (sex == Sex.Female)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 161;
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
 
         // TODO: Improve readability and transform into function
         //Fixed value for zero times per exercise week
         basalMetabolicRate = basalMetabolicRate * 1.2;
 
-        int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
+        int roundedBasalMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
 
-        return Results.Ok(new { BasalMetabolicRateWithoutExercise = $"{roundedBaseMetabolicRate} calories" });
+        return Results.Ok(new
+        {
+            bmr = roundedBasalMetabolicRate,
+            type = "Without exercise"
+        });
     }
 
 }

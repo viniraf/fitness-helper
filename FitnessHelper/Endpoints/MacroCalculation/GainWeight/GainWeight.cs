@@ -1,4 +1,8 @@
-﻿namespace FitnessHelper.Endpoints.MacroCalculation.GainWeight;
+﻿using FitnessHelper.Common;
+using FitnessHelper.Domain;
+using FitnessHelper.Enums;
+
+namespace FitnessHelper.Endpoints.MacroCalculation.GainWeight;
 
 public class GainWeight
 {
@@ -10,32 +14,12 @@ public class GainWeight
 
     public static IResult Action(int basalMetabolicRate, double weight)
     {
-        double gainWeightBasalMetabolicRate = basalMetabolicRate + 500;
+        Calculations calculations = new Calculations();
 
-        double totalCalories = gainWeightBasalMetabolicRate;
+        Goal goal = Goal.GainWeight;
 
-        double gramsOfProtein = weight * 1.8;
+        MacroCalculationClass macroCalculationResult = calculations.MacroCalculation(basalMetabolicRate, weight, goal);
 
-        totalCalories = totalCalories - (gramsOfProtein * 4);
-
-        double gramsOfFat = weight;
-
-        totalCalories = totalCalories - (gramsOfFat * 8);
-
-        double gramsOfCarb = totalCalories / 4;
-
-        // TODO: Create response object
-        return Results.Ok(
-            new
-            {
-                BMR = $"{basalMetabolicRate} calories",
-                GainWeightBMR = $"{gainWeightBasalMetabolicRate} calories",
-                ProtGram = $"{gramsOfProtein} g",
-                ProtCal = $"{gramsOfProtein * 4} calories from protein",
-                CarbGram = $"{gramsOfCarb} g",
-                CarbCal = $"{gramsOfCarb * 4} calories from carb",
-                FatGram = $"{gramsOfFat} g",
-                FatCal = $"{gramsOfFat * 8} calories from fat",
-            });
+        return Results.Ok(macroCalculationResult);
     }
 }

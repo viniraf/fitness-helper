@@ -1,4 +1,5 @@
-﻿using FitnessHelper.Enums;
+﻿using FitnessHelper.Common;
+using FitnessHelper.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessHelper.Endpoints.Bmr.WithExercise;
@@ -15,13 +16,16 @@ public class WithExercise
     {
         double basalMetabolicRate = 0;
 
+        Calculations calculations = new Calculations();
+
         if (sex == Sex.Male)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
-        else if (sex == Sex.Female)
+
+        if (sex == Sex.Female)
         {
-            basalMetabolicRate = (10 * weight) + (6.25 * height) - (5 * age) + 161;
+            basalMetabolicRate = calculations.BasalMetabolicRate(weight, height, age, sex);
         }
 
         Dictionary<int, double> multiplicativeFactorMap = new Dictionary<int, double>
@@ -40,9 +44,13 @@ public class WithExercise
 
         basalMetabolicRate = basalMetabolicRate * multiplicativeFactor;
 
-        int roundedBaseMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
+        int roundedBasalMetabolicRate = (int)Math.Round(basalMetabolicRate, MidpointRounding.AwayFromZero);
 
 
-        return Results.Ok(new { BasalMetabolicRateWithExercise = $"{roundedBaseMetabolicRate} calories" });
+        return Results.Ok(new 
+        { 
+            bmr = roundedBasalMetabolicRate,
+            type = "With exercise"
+        });
     }
 }
