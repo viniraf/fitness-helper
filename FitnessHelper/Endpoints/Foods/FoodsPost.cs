@@ -4,7 +4,7 @@ using FitnessHelper.Endpoints.Foods;
 
 namespace FitnessHelper.Endpoints.NutritionalInformation;
 
-public class PostFoods
+public class FoodsPost
 {
     public static string Template => "/foods";
 
@@ -19,9 +19,9 @@ public class PostFoods
             return Results.BadRequest("Please check the data and try again");
         }
 
-        var newFood = new FoodsClass();
+        FoodsClass newFood = new FoodsClass();
 
-        var qtyCalPerGram = (foodsRequest.QtyProt * 4) + (foodsRequest.QtyCarb * 4) + (foodsRequest.QtyFat * 7);
+        double qtyCalPerGram = (foodsRequest.QtyProt * 4) + (foodsRequest.QtyCarb * 4) + (foodsRequest.QtyFat * 7);
 
         newFood.Name = foodsRequest.Name;
         newFood.UnitOfMeasurement = foodsRequest.UnitOfMeasurement;

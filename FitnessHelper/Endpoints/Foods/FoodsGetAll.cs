@@ -1,34 +1,30 @@
 ﻿using FitnessHelper.Data;
 using FitnessHelper.Domain;
+using FitnessHelper.Endpoints.Foods;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
-namespace FitnessHelper.Endpoints.Foods;
+namespace FitnessHelper.Endpoints.NutritionalInformation;
 
-public class GetFoodsByName
+public class FoodsGetAll
 {
-    public static string Template => "/foods/{name}";
+    public static string Template => "/foods";
 
     public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(AppDbContext context, string name)
+    public static IResult Action(AppDbContext context)
     {
-
-        string lowerName = name.ToLower();
-
-        List<FoodsClass>? foods = context.Foods
-            .Where(f => f.Name.ToLower().Contains(name))
-            .ToList();
+        List<FoodsClass>? foods = context.Foods.ToList();
 
         if (foods is null || !foods.Any())
         {
-
             ProblemDetails problemDetails = new ProblemDetails
             {
                 Status = StatusCodes.Status404NotFound,
                 Title = "Not Found",
-                Detail = $"No food found with the name: {name}"
+                Detail = $"No food registered"
             };
 
             return Results.Problem(problemDetails);
