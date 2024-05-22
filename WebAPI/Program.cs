@@ -23,6 +23,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite($"Data Source={dbPath}");
 });
 
+// Configuring CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowWebUI",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7238") // Substitua pelo endereço do seu WebUI
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowWebUI");
 
 app.UseAuthorization();
 
