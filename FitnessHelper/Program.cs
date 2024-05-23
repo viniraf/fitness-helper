@@ -11,7 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Caminho para o arquivo do banco de dados
+// Path to database file
 var dbPath = Path.Combine("Data", "Database.db");
 
 // Add services to the container.
