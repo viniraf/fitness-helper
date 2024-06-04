@@ -1,0 +1,50 @@
+﻿@page "/"
+@layout LoginLayout
+@inject NavigationManager NavigationManager
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card w-25">
+        <div class="card-body">
+            <h1 class="h3 mb-3 fw-normal text-center">Login para Fitness Helper</h1>
+            <div class="form-floating mb-3">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de email" @bind="email" />
+                <label for="inputEmail">Endereço de email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Senha" @bind="password" />
+                <label for="inputPassword">Senha</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" @onclick="SubmitForm">Entrar</button>
+            <p class="@messageClass">@message</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    string email;
+    string password;
+    string message = "";
+    string messageClass = "";
+
+    async Task SubmitForm()
+    {
+        if (email == "admin" && password == "123")
+        {
+            // Redireciona para a página /home
+            NavigationManager.NavigateTo("/home");
+        }
+        else
+        {
+            // Mostra uma mensagem de erro e limpa os campos do formulário
+            message = "Usuário e/ou senha estão errados";
+            messageClass = "text-danger";
+            await Task.Delay(3000); // Aguarda 3 segundos
+            message = "";
+            messageClass = "";
+            email = "";
+            password = "";
+        }
+    }
+}
+
+
