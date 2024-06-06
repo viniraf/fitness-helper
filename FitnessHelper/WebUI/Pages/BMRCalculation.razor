@@ -1,0 +1,76 @@
+﻿@page "/bmr-calculation"
+
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Basal Metabolic Rate</h3>
+                    <p class="card-text text-center">The Basal Metabolic Rate (BMR) is the minimum energy required to maintain the body's functions at rest, such as heartbeat, blood pressure, breathing and maintaining body temperature.</p>
+
+                    <form>
+                        <div class="mb-4">
+                            <label for="sexo" class="form-label">Sexo</label>
+                            <input type="text" class="form-control" id="sex" value="Male" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input type="text" class="form-control" id="weight" value="70" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="height" class="form-label">Height</label>
+                            <input type="text" class="form-control" id="height" value="1,75" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="text" class="form-control" id="idade" value="25" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exerciseWeeklyFrequency" class="form-label">Exercise Weekly Frequency</label>
+                            <input type="text" class="form-control" id="exerciseWeeklyFrequency" value="3" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="goal" class="form-label">Goal</label>
+                            <input type="text" class="form-control" id="goal" value="Lose weight" readonly>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button" @onclick="Calculate">Calculate</button>
+                            <button class="btn btn-secondary" type="button" @onclick="Clear">Clear</button>
+                        </div>
+                    </form>
+
+                    @if (showResult)
+                    {
+                        <div class="alert alert-primary mt-4" style="background-color: #0d6efd; color: white;">
+                            <h4 class="alert-heading">Basal Metabolic Rate: @basalMetabolicRate Calories/Day</h4>
+                            <p>Calories needed to achieve the goal: @caloriesNeeded kcal</p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code 
+{
+    private bool showResult = false;
+    private string basalMetabolicRate = "XXX";
+    private string caloriesNeeded = "XXX";
+
+    private void Calculate()
+    {
+        // Lógica de cálculo de macronutrientes
+        showResult = true;
+    }
+
+    private void Clear()
+    {
+        // Lógica de limpar os campos
+        showResult = false;
+    }
+}
